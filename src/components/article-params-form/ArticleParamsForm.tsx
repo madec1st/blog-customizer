@@ -44,6 +44,8 @@ export const ArticleParamsForm = ({
 	};
 
 	useEffect(() => {
+		if (!isSidebarOpen) return;
+
 		const handleClickOutside = (evt: MouseEvent) => {
 			if (
 				sidebarRef.current &&
@@ -58,7 +60,7 @@ export const ArticleParamsForm = ({
 		return () => {
 			document.removeEventListener('mousedown', handleClickOutside);
 		};
-	}, []);
+	}, [isSidebarOpen]);
 
 	const keyMap: Record<string, string> = {
 		'font-size-': 'fontSizeOption',
@@ -117,20 +119,8 @@ export const ArticleParamsForm = ({
 	return (
 		<>
 			<ArrowButton isActive={isSidebarOpen} onClick={handleClick} />
-			<aside
-				ref={sidebarRef}
-				className={styles.container}
-				style={{
-					overflowX: 'hidden',
-				}}>
-				<form
-					className={styles.form}
-					style={{
-						display: 'flex',
-						flexDirection: 'column',
-						justifyContent: 'start',
-						gap: '50px',
-					}}>
+			<aside ref={sidebarRef} className={styles.container}>
+				<form className={styles.form} onSubmit={handleSubmit}>
 					<Text size={31} weight={800} uppercase>
 						Задайте параметры
 					</Text>
@@ -159,7 +149,7 @@ export const ArticleParamsForm = ({
 						onChange={handleChange}></Select>
 					<div className={styles.bottomContainer}>
 						<Button title='Сбросить' type='reset' onClick={handleReset} />
-						<Button title='Применить' type='submit' onClick={handleSubmit} />
+						<Button title='Применить' type='submit' />
 					</div>
 				</form>
 			</aside>
