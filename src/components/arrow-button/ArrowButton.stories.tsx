@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
+import { action } from '@storybook/addon-actions';
 
 import { ArrowButton } from './ArrowButton';
 
@@ -11,9 +12,11 @@ type Story = StoryObj<typeof ArrowButton>;
 
 export const ArrowButtonStory: Story = {
 	render: () => {
+		const handleOnClick = action('toggleSidebar');
+
 		return (
 			<>
-				<ArrowButton />
+				<ArrowButton isActive={false} onClick={handleOnClick} />
 			</>
 		);
 	},
